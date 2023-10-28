@@ -4,7 +4,7 @@ import {BuildOptions} from './types/config';
 import {buildPlugins} from './buildPlugins';
 import {buildLoaders} from './buildLoaders';
 import {buildResolvers} from './buildResolvers';
-import { buildDevServer } from './buildDevServer';
+import {buildDevServer} from './buildDevServer';
 
 export function buildWebpackConfig(options: BuildOptions): webpack.Configuration {
   const {paths, mode, isDev} = options;
@@ -13,16 +13,16 @@ export function buildWebpackConfig(options: BuildOptions): webpack.Configuration
     mode,
     entry: paths.entry,
     output: {
-      filename: "[name].[contenthash].js",
+      filename: '[name].[contenthash].js',
       path: paths.build,
-      clean: true
+      clean: true,
     },
     plugins: buildPlugins(options),
     module: {
-      rules: buildLoaders(options),
+      rules: buildLoaders(options)
     },
-    resolve: buildResolvers(),
-    devtool: isDev ? 'inline-source-map' : false,
+    resolve: buildResolvers(options),
+    devtool: isDev ? 'inline-source-map' : undefined,
     devServer: isDev ? buildDevServer(options) : undefined,
   }
 }
